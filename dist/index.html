@@ -1,0 +1,182 @@
+<!DOCTYPE html><html lang="en" x-data="theme()" :class="$store.app.isDark ? 'ligth' : ''"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0"><meta http-equiv="X-UA-Compatible" content="ie=edge"><meta name="generator" content="Astro v3.1.0"><title>AidFinder</title><meta name="astro-view-transitions-enabled" content="true"><meta name="astro-view-transitions-fallback" content="animate"><link rel="stylesheet" href="/_astro/index.a4c4aebe.css" /><script type="module" src="/_astro/hoisted.cd0ffb21.js"></script></head> <body x-data="homeSpy()"> <!-- Navbar --> <div x-cloak x-data="navbar()" x-on:scroll.window="scroll()" class="fixed top-0 left-0 w-full z-50 transition-all duration-300" :class="scrolled || $store.app.mobileOpen ? 'bg-white dark:bg-muted-900 shadow-lg shadow-muted-300/30 dark:shadow-muted-900/40' : ''"> <div class="w-full max-w-7xl mx-auto flex items-center justify-between pl-4 pr-0 lg:pr-4 font-sans"> <!-- Left --> <div class="w-full lg:w-auto flex items-center gap-6"> <a href="/" class="flex items-center gap-3"> <div class="transition-all duration-300" :class="scrolled || $store.app.mobileOpen ? 'text-rose-500 rotate-90' : 'text-primary-600'"></div> <span class="font-sans text-lg tracking-widest uppercase text-muted-800 dark:text-muted-100">AidFinder</span> </a> <div role="button" class="hidden md:block relative" @click.away="closeFilters()"> <input type="text" class="peer pl-9 pr-4 py-2 h-10 text-sm leading-5 font-sans w-full rounded-xl bg-white text-slate-600 border border-slate-300 focus-visible:shadow-lg focus-visible:shadow-slate-300/50 dark:focus-visible:shadow-slate-800/50 placeholder:text-slate-300 dark:placeholder:text-slate-500 dark:bg-slate-800 dark:text-slate-200 dark:border-slate-700 outline-none focus-visible:outline-2 focus-visible:outline-dashed focus-visible:outline-slate-300 dark:focus-visible:outline-slate-600 focus-visible:outline-offset-2 disabled:opacity-60 disabled:cursor-not-allowed transition-all duration-300" placeholder="Buscar..." @focus="openFilters()"> <div class="absolute top-0 left-0 h-10 w-10 flex justify-center items-center text-slate-400 peer-focus:text-primary-500 peer-disabled:opacity-20 transition-colors duration-300"> <i class="iconify w-4 h-4" data-icon="lucide:search"></i> </div> </div> <div class="flex items-center justify-center h-20 w-20 lg:hidden ml-auto"> <button class="flex relative justify-center items-center w-10 h-10 focus:outline-none lg:hidden scale-90" @click="$store.app.mobileOpen = !$store.app.mobileOpen"> <div class="block top-1/2 left-6 w-4 -translate-x-1/2 -translate-y-1/2"> <span class="block absolute w-7 h-0.5 bg-current transition duration-500 ease-in-out" :class="[
+        $store.app.mobileOpen ? 'rotate-45' : '-translate-y-2',
+        scrolled || $store.app.mobileOpen ? 'text-primary-500' : 'text-muted-800 dark:text-white'
+      ]"></span> <span class="block absolute w-5 h-0.5 bg-current transition duration-500 ease-in-out" :class="[
+        $store.app.mobileOpen ? 'opacity-0' : '',
+        scrolled || $store.app.mobileOpen ? 'text-primary-500' : 'text-muted-800 dark:text-white'
+      ]"></span> <span class="block absolute w-7 h-0.5 bg-current transition duration-500 ease-in-out" :class="[
+        $store.app.mobileOpen ? '-rotate-45' : 'translate-y-2',
+        scrolled || $store.app.mobileOpen ? 'text-primary-500' : 'text-muted-800 dark:text-white'
+      ]"></span> </div> </button> </div> </div> <!-- Right --> <div class="flex-col items-center lg:justify-end gap-x-6" :class="$store.app.mobileOpen ? 'absolute top-[80px] left-0 w-full flex text-center px-6 pt-2 pb-6 border-t border-muted-200 dark:border-muted-800 bg-white dark:bg-muted-900 shadow-lg shadow-muted-300/40 dark:shadow-muted-900/50' : 'hidden lg:flex lg:flex-row'"> <div class="flex flex-col lg:flex-row items-center gap-x-6"> <div class="relative py-3 lg:py-5 after:content-[''] after:absolute after:-bottom-1.5 after:left-0 after:h-[3px] after:rounded-t-full after:transition-all after:duration-300 transition-colors duration-300" :class="activeStep === 'spy-2' ? 'text-primary-500 after:bg-primary-500 after:w-full' : 'text-slate-500 dark:text-slate-400 hover:text-muted-700 dark:hover:text-muted-100 after:w-0'"> <a href="#product">Productos</a> </div> <div class="relative py-3 lg:py-5 after:content-[''] after:absolute after:-bottom-1.5 after:left-0 after:h-[3px] after:rounded-t-full after:transition-all after:duration-300 transition-colors duration-300" :class="activeStep === 'spy-3' ? 'text-primary-500 after:bg-primary-500 after:w-full' : 'text-slate-500 dark:text-slate-400 hover:text-muted-700 dark:hover:text-muted-100 after:w-0'"> <a href="#pricing">Precios</a> </div> <div class="relative py-3 lg:py-5 text-slate-500 dark:text-slate-400 hover:text-muted-700 dark:hover:text-muted-100 transition-colors duration-300"> <a href="#">Iniciar sesión</a> </div> </div> <div class="w-full md:w-auto"> <a href="#" class="relative font-sans font-normal inline-flex items-center justify-center leading-5 no-underline space-x-1 text-white bg-blue-600 h-12 px-5 py-3 text-sm rounded-xl hover:bg-blue-400 hover:shadow-xl hover:shadow-primary-600/20 tw-accessibility transition-all duration-300" :class="'w-full md:w-[240px] lg:w-[110px]'"> Registrate </a> </div> </div> </div> </div> <!-- Body slot -->  <div class="min-h-screen w-full overflow-hidden bg-muted-100 dark:bg-muted-1000"> <div class="min-h-screen w-full max-w-7xl mx-auto flex items-center px-4"> <div class="w-full grid grid-cols-12"> <div class="col-span-12 ltablet:col-span-5 lg:col-span-5"> <div class="h-full ptablet:max-w-lg ptablet:mx-auto flex items-center mb-8 ltablet:mb-0 lg:mb-0"> <div class="text-center ltablet:text-left lg:text-left font-sans space-y-4"> <h1 class="font-medium text-4xl ptablet:text-5xl lg:text-5xl text-muted-800 dark:text-white">
+Te ayudamos a encontrar al doctor que necesites
+</h1> <p class="text-lg text-muted-500 dark:text-muted-400">
+Ofrece una plataforma que utiliza la geolocalización para encontrar médicos, hospitales y otros servicios de emergencia cercanos a la ubicación del usuario.
+</p> <div class="w-full flex items-center justify-center ltablet:justify-start lg:justify-start gap-2"> <a href="/" class="relative font-sans font-normal inline-flex items-center justify-center leading-5 no-underline space-x-1 text-white bg-blue-600 h-12 px-5 py-3 text-sm rounded-xl hover:bg-blue-400 hover:shadow-xl hover:shadow-primary-600/20 tw-accessibility transition-all duration-300" :class="'min-w-[130px]'"> Empezar </a> <a href="/" class="relative font-sans font-normal inline-flex items-center justify-center gap-x-1 rounded-xl leading-5 no-underline text-slate-700 bg-white border dark:text-white dark:bg-slate-700 dark:border-slate-600 h-12 px-5 py-3 text-sm hover:enabled:bg-slate-50 dark:hover:enabled:bg-slate-600 active:enabled:bg-slate-200 dark:active:enabled:bg-slate-700 tw-accessibility transition-all duration-300" :class="'min-w-[130px]'"> Explora </a> </div> </div> </div> </div> <div class="relative col-span-12 ltablet:col-span-7 lg:col-span-7"> <img src="/img/illustrations/hero.svg" class="block dark:hidden w-full ltablet:max-w-[540px] max-w-[620px] mx-auto" alt="Hero image"> <img src="/img/illustrations/hero-dark.svg" class="hidden dark:block w-full ltablet:max-w-[540px] max-w-[620px] mx-auto" alt="Hero image"> </div> </div> </div> </div> <section class="w-full py-16 px-4 bg-muted-100 dark:bg-muted-1000">  <div class="w-full max-w-7xl mx-auto">  <div class="w-full max-w-xl mb-14"> <h4 class="font-sans font-semibold text-xs tracking-widest uppercase mb-3 text-primary-500">Atención médica a pedido</h4> <h2 class="font-sans text-4xl font-medium mb-4 text-muted-800 dark:text-muted-100">Olvídate de las molestias</h2> <p class="text-lg text-muted-500 dark:text-muted-400">Es una herramienta útil para aquellos que necesitan encontrar atención médica de forma rápida y sencilla en situaciones de emergencia.</p> </div> <div class="grid md:grid-cols-3 ltablet:grid-cols-4 lg:grid-cols-4 gap-x-6 gap-y-12" x-intersect="activeStep = ''"> <!-- Item --> <div> <div class="font-sans"> <i class="iconify w-7 h-7 mb-2" :class="'text-primary-600'" data-icon="ph:timer-duotone"></i> <h4 class="font-light text-lg mb-2 text-muted-800 dark:text-muted-100">Salva tiempo y esfuerzo</h4> <p class="text-sm text-muted-500 dark:text-muted-400">Ofrece facilidad y eficacia para encontrar lo que necesites.</p> </div> </div> <!-- Item --> <div> <div class="font-sans"> <i class="iconify w-7 h-7 mb-2" :class="'text-rose-500'" data-icon="ph:first-aid-duotone"></i> <h4 class="font-light text-lg mb-2 text-muted-800 dark:text-muted-100">Profesionales seleccionados</h4> <p class="text-sm text-muted-500 dark:text-muted-400">Conoce a los mejores medicos de tu ciudad.</p> </div> </div> <!-- Item --> <div> <div class="font-sans"> <i class="iconify w-7 h-7 mb-2" :class="'text-primary-600'" data-icon="ph:first-aid-kit-duotone"></i> <h4 class="font-light text-lg mb-2 text-muted-800 dark:text-muted-100">Emergencias 24/7</h4> <p class="text-sm text-muted-500 dark:text-muted-400">Ofrece servicios continuos estando siempre al pendiente de ti.</p> </div> </div> <!-- Item --> <div> <div class="font-sans"> <i class="iconify w-7 h-7 mb-2" :class="'text-rose-500'" data-icon="ph:heartbeat-duotone"></i> <h4 class="font-light text-lg mb-2 text-muted-800 dark:text-muted-100">Servicios conectados</h4> <p class="text-sm text-muted-500 dark:text-muted-400">Monitorea tu estado de salud en cualquier ubicación.</p> </div> </div> <!-- Item --> <div> <div class="font-sans"> <i class="iconify w-7 h-7 mb-2" :class="'text-primary-600'" data-icon="ph:video-camera-duotone"></i> <h4 class="font-light text-lg mb-2 text-muted-800 dark:text-muted-100">Videoconsultas</h4> <p class="text-sm text-muted-500 dark:text-muted-400">Acude con tu medico de preferencia desde la comodidad de tu hogar.</p> </div> </div> <!-- Item --> <div> <div class="font-sans"> <i class="iconify w-7 h-7 mb-2" :class="'text-primary-600'" data-icon="ph:phone-duotone"></i> <h4 class="font-light text-lg mb-2 text-muted-800 dark:text-muted-100">Audioconsultas</h4> <p class="text-sm text-muted-500 dark:text-muted-400">La atención en el hogar facilita la vida cotidiana y ayuda a tener un seguimiento adecuado de la salud.</p> </div> </div> <!-- Item --> <div> <div class="font-sans"> <i class="iconify w-7 h-7 mb-2" :class="'text-primary-600'" data-icon="ph:calendar-duotone"></i> <h4 class="font-light text-lg mb-2 text-muted-800 dark:text-muted-100">Citas</h4> <p class="text-sm text-muted-500 dark:text-muted-400">Programa tus citas con tu médico de preferencia.</p> </div> </div> <!-- Item --> <div> <div class="font-sans"> <i class="iconify w-7 h-7 mb-2" :class="'text-primary-600'" data-icon="ph:pill-duotone"></i> <h4 class="font-light text-lg mb-2 text-muted-800 dark:text-muted-100">Medicina</h4> <p class="text-sm text-muted-500 dark:text-muted-400">Ofrece recetas medicas basados en tus sintomas monitoreados por tu médico</p> </div> </div> </div>  </div>  </section> <section class="w-full py-16 px-4 bg-muted-100 dark:bg-muted-1000" :class="'overflow-hidden'">  <div class="w-full max-w-7xl mx-auto">  <div class="py-10"> <div id="product" class="flex flex-col md:flex-row items-center py-6" x-intersect="activeStep = 'spy-2'"> <!--Column--> <div class="w-full md:w-1/2 relative p-6"> <!--Section content--> <div class="w-full max-w-lg space-y-4 lg:pl-10"> <!--Badge--> <h4 class="font-sans font-semibold text-xs tracking-widest uppercase mb-3 text-primary-500">
+Herramientas de monitoreo de salud
+</h4> <!--Title--> <h2 class="font-heading font-medium text-4xl text-muted-800 dark:text-white">
+Vigila de cerca tu salud
+</h2> <!--Subtitle--> <p class="font-sans text-lg text-muted-500 dark:text-muted-400">
+Monitorea tu estado de salud desde casa, notificando a tu médico a cargo.
+</p> <!--Link--> <a href="#" class="group inline-flex items-center gap-4 text-primary-500 hover:text-primary-400 transition-colors duration-300"> <span class="font-sans font-medium text-sm">
+Conozca más sobre nuestro sitio
+</span> <i class="iconify w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" data-icon="lucide:arrow-right"></i> </a> </div> </div> <!--Column--> <div class="w-full md:w-1/2 relative p-6"> <!--Feature--> <div class="relative flex flex-col gap-6 ptablet:w-[480px]"> <!--Polka dots--> <div class="absolute -top-5 -left-5 z-0"> <div class="flex flex-wrap items-center gap-2 w-full max-w-[100px]" x-data="{}"> <template x-for="index in 72" :key="index"> <span class="block w-1 h-1 rounded-full bg-muted-300 dark:bg-muted-700"></span> </template> </div> </div> <div class="absolute -bottom-5 -right-5 z-0"> <div class="flex flex-wrap items-center gap-2 w-full max-w-[100px]" x-data="{}"> <template x-for="index in 72" :key="index"> <span class="block w-1 h-1 rounded-full bg-muted-300 dark:bg-muted-700"></span> </template> </div> </div> <!--Items--> <div class="flex items-end gap-6"> <!--Item--> <div class="w-full ltablet:w-2/3 lg:w-2/3"> <div class="
+          relative
+          z-10
+          w-full
+          p-5
+          rounded-xl
+          bg-white
+          dark:bg-muted-800
+          border border-muted-200
+          dark:border-muted-700
+          shadow-xl shadow-muted-400/10
+          dark:shadow-muted-800/10
+        "> <h4 class="
+            font-heading font-semibold
+            text-muted-800
+            dark:text-muted-100
+            mb-2
+          ">
+Estadísticas personales
+</h4> <!--Fake chart legend--> <div class="flex gap-4 mb-12"> <div class="flex items-center gap-2"> <span class="block w-2 h-2 rounded-full bg-rose-400"></span> <span class="font-sans text-xs text-muted-400">Fatiga</span> </div> <div class="flex items-center gap-2"> <span class="block w-2 h-2 rounded-full bg-violet-500"></span> <span class="font-sans text-xs text-muted-400">Ritmo cardiaco</span> </div> <div class="flex items-center gap-2"> <span class="block w-2 h-2 rounded-full bg-primary-600"></span> <span class="font-sans text-xs text-muted-400">Oxígeno</span> </div> </div> <!--Fake chart--> <div class="flex items-end justify-between gap-4"> <div class="flex items-end justify-end gap-2 w-1/3"> <div class="flex-1 h-10 rounded-md bg-rose-300"></div> <div class="flex-1 h-16 rounded-md bg-violet-300"></div> <div class="flex-1 h-28 rounded-md bg-primary-300"></div> </div> <div class="flex items-end justify-end gap-2 w-1/3"> <div class="flex-1 h-20 rounded-md bg-rose-300"></div> <div class="flex-1 h-28 rounded-md bg-violet-300"></div> <div class="flex-1 h-14 rounded-md bg-primary-300"></div> </div> <div class="flex items-end justify-end gap-2 w-1/3"> <div class="flex-1 h-16 rounded-md bg-rose-300"></div> <div class="flex-1 h-24 rounded-md bg-violet-300"></div> <div class="flex-1 h-12 rounded-md bg-primary-300"></div> </div> </div> </div> </div> <!--Item--> <div class="w-full md:w-1/3 ptablet:hidden"> <div class="
+          relative
+          z-10
+          w-full
+          p-5
+          rounded-xl
+          bg-white
+          dark:bg-muted-800
+          border border-muted-200
+          dark:border-muted-700
+          shadow-xl shadow-muted-400/10
+          dark:shadow-muted-800/10
+        "> <div class="flex flex-col text-center"> <img class="object-cover w-14 h-14 mx-auto mb-2 mask mask-blob" src="https://media.cssninja.io/shuriken/avatars/2.svg" alt="Avatar" width="56" height="56"> <h4 class="
+              font-heading font-medium
+              text-muted-800
+              dark:text-muted-100
+            ">
+Alondra Martínez
+</h4> <div class="flex items-center justify-center gap-1 my-4"> <i class="iconify w-3 h-3 text-yellow-400" data-icon="uiw:star-on"></i> <i class="iconify w-3 h-3 text-yellow-400" data-icon="uiw:star-on"></i> <i class="iconify w-3 h-3 text-yellow-400" data-icon="uiw:star-on"></i> <i class="iconify w-3 h-3 text-yellow-400" data-icon="uiw:star-on"></i> <i class="iconify w-3 h-3 text-yellow-400" data-icon="uiw:star-on"></i> </div> </div> </div> </div> </div> <!--Item--> <div class="w-full flex justify-end"> <div class="
+        relative
+        z-10
+        w-full
+        max-w-md
+        p-5
+        rounded-xl
+        bg-white
+        dark:bg-muted-800
+        border border-muted-200
+        dark:border-muted-700
+        shadow-xl shadow-muted-400/10
+        dark:shadow-muted-800/10
+      "> <div class="flex items-center gap-4"> <img class="object-cover w-14 h-14 mask mask-blob" src="https://media.cssninja.io/shuriken/avatars/12.svg" alt="Avatar" width="56" height="56"> <div> <h4 class="
+              font-heading font-medium
+              text-muted-800
+              dark:text-muted-100
+            ">
+Dra. Cristela Pulido
+</h4> <p class="font-sans text-xs text-muted-400 mb-2">te ha llamado</p> </div> <div class="flex items-center gap-2 ml-auto"> <button class="
+              hidden
+              ltablet:inline-block
+              lg:inline-block
+              font-sans
+              text-sm
+              h-9
+              px-4
+              border-2
+              rounded-lg
+              bg-rose-500/10
+              border-rose-500
+              text-rose-500
+              hover:bg-rose-500 hover:text-white
+              transition-colors
+              duration-300
+            ">
+Rechazar
+</button> <button class="
+              font-sans
+              text-sm
+              h-9
+              px-4
+              border-2
+              rounded-lg
+              bg-emerald-500/10
+              border-emerald-500
+              text-emerald-500
+              hover:bg-emerald-500 hover:text-white
+              transition-colors
+              duration-300
+            ">
+Aceptar
+</button> </div> </div> </div> </div> </div> </div> </div> <div class="flex flex-col-reverse md:flex-row items-center py-6"> <!--Column--> <div class="w-full md:w-1/2 relative p-6"> <!--Feature--> <div class="relative w-full max-w-sm mx-auto space-y-4"> <!--Background shape--> <div class="absolute top-0 -left-10 ptablet:-left-32 h-[480px] w-[480px] rotate-45 mask mask-hexed bg-primary-100 dark:bg-primary-500/5 z-0"></div> <!--Item--> <div class="relative -left-8 ptablet:-left-16 z-10 w-full p-5 rounded-xl bg-white dark:bg-muted-800 border border-muted-200 dark:border-muted-700 shadow-xl shadow-muted-400/10 dark:shadow-muted-800/10"> <div class="flex gap-4"> <img class="object-cover w-14 h-14 mask mask-blob" src="https://media.cssninja.io/shuriken/avatars/2.svg" alt="Avatar" width="56" height="56"> <div> <h4 class="font-heading font-medium text-muted-800 dark:text-muted-100">
+Alondra Martínez
+</h4> <p class="font-sans text-xs text-muted-400 mb-2">hace 12 minutos</p> <p class="font-sans text-sm text-muted-500">
+Hola, tengo una duda.
+</p> </div> </div> </div> <!--Item--> <div class="relative -right-8 ptablet:right-0 z-10 w-full p-5 rounded-xl bg-white dark:bg-muted-800 border border-muted-200 dark:border-muted-700 shadow-xl shadow-muted-400/10 dark:shadow-muted-800/10"> <div class="flex flex-row-reverse gap-4"> <img class="object-cover w-14 h-14 mask mask-blob" src="https://media.cssninja.io/shuriken/avatars/14.svg" alt="Avatar" width="56" height="56"> <div> <h4 class="font-heading font-medium text-muted-800 dark:text-muted-100">
+Dr. Gustavo Flores
+</h4> <p class="font-sans text-xs text-muted-400 mb-2">hace 8 minutos</p> <p class="font-sans text-sm text-muted-500">
+Hola, Alondra, cuentame ¿en qué puedo servirte?
+</p> </div> </div> </div> <!--Item--> <div class="relative -left-8 ptablet:-left-16 z-10 w-full p-5 rounded-xl bg-white dark:bg-muted-800 border border-muted-200 dark:border-muted-700 shadow-xl shadow-muted-400/10 dark:shadow-muted-800/10"> <div class="flex gap-4"> <img class="object-cover w-14 h-14 mask mask-blob" src="https://media.cssninja.io/shuriken/avatars/2.svg" alt="Avatar" width="56" height="56"> <div> <h4 class="font-heading font-medium text-muted-800 dark:text-muted-100">
+Alondra Martínez
+</h4> <p class="font-sans text-xs text-muted-400 mb-2">hace 6 minutos</p> <p class="font-sans text-sm text-muted-500">
+He estado teniendo problemas para dormir y no se que hacer.
+</p> </div> </div> </div> </div> </div> <!--Column--> <div class="w-full md:w-1/2 relative p-6"> <!--Section content--> <div class="w-full max-w-lg space-y-4"> <!--Badge--> <h4 class="font-sans font-semibold text-xs tracking-widest uppercase mb-3 text-primary-500">Conversaciones remotas</h4> <!--Title--> <h2 class="
+          font-heading font-medium
+          text-4xl text-muted-800
+          dark:text-white
+        ">
+Utilice mensajes para mantenerse al día con su médico
+</h2> <!--Subtitle--> <p class="font-sans text-lg text-muted-500 dark:text-muted-400">
+Mantenga contacto continuo con su médico, agendando las citas proximas para dar especificaciones del cuidado de su salud.
+</p> <!--Link--> <a href="#" class="
+          group
+          inline-flex
+          items-center
+          gap-4
+          text-primary-500
+          hover:text-primary-400
+          transition-colors
+          duration-300
+        "> <span class="font-sans font-medium text-sm">
+Conozca más sobre nuestro sitio
+</span> <i class="
+            iconify
+            w-4
+            h-4
+            group-hover:translate-x-1
+            transition-transform
+            duration-300
+          " data-icon="lucide:arrow-right"></i> </a> </div> </div> </div> </div>  </div>  </section> <section class="w-full py-16 px-4 bg-muted-100 dark:bg-muted-1000">  <div class="w-full max-w-7xl mx-auto">  <div class="w-full max-w-xl mb-14" :class="'mx-auto text-center'"> <h4 class="font-sans font-semibold text-xs tracking-widest uppercase mb-3 text-primary-500">Precio simple</h4> <h2 class="font-sans text-4xl font-medium mb-4 text-muted-800 dark:text-muted-100">Precios</h2> <p class="text-lg text-muted-500 dark:text-muted-400"></p> </div> <div id="pricing" class="w-full max-w-6xl mx-auto" x-intersect="activeStep = 'spy-3'"> <div class="p-6 md:p-10 rounded-2xl bg-muted-200 dark:bg-muted-900"> <div class="grid md:grid-cols-2 ltablet:grid-cols-3 lg:grid-cols-3 gap-6"> <div class="ptablet:hidden"> <div class="h-full flex items-center justify-center"> <div class="font-sans md:px-4"> <h3 class="text-2xl mb-3 text-muted-800 dark:text-muted-100">Precios razonables</h3> <p class="mb-3 text-sm text-muted-500 dark:text-muted-400">
+Ofrece descuentos y promociones especiales para los clientes y hace que se sientan valorados.
+</p> <!--Link--> <a href="#" class="group inline-flex items-center gap-4 text-primary-500 hover:text-primary-400 transition-colors duration-300"> <span class="font-sans font-medium text-sm">
+Descubre más
+</span> <i class="iconify w-4 h-4 group-hover:translate-x-1 transition-transform duration-300" data-icon="lucide:arrow-right"></i> </a> </div> </div> </div> <!-- Pricing option --> <div> <div class="w-full rounded-xl px-6 md:px-8 pt-6 md:pt-8 pb-4 border border-muted-200 dark:border-muted-700 bg-white dark:bg-muted-800 transition-colors duration-300"> <div class="flex items-center -mt-2"> <div class="flex items-center justify-center h-12 w-12 border border-muted-200 dark:border-muted-700 rounded-full bg-white dark:bg-muted-800 mr-2"> <div class="flex items-center justify-center h-10 w-10 bg-rose-100 dark:bg-rose-100/10 rounded-full"> <i class="iconify w-5 h-5 text-rose-500" data-icon="ph:first-aid-duotone"></i> </div> </div> <h3 class="font-heading text-2xl font-medium text-muted-800 dark:text-white">
+Paciente
+</h3> </div> <p class="font-sans text-sm py-2 mt-1 text-muted-500 dark:text-muted-400">
+Una membresía inicial para ayudarnos a crear más productos gratuitos.
+</p> <div class="flex items-center mt-2 mb-4"> <h4 class="font-heading text-4xl font-semibold text-muted-800 dark:text-white mr-4">
+$0
+</h4> <span class="font-sans text-xs text-muted-500 dark:text-muted-400"> <span>al mes</span> </span> </div> <ul class="pb-4 space-y-1 text-muted-400"> <li class="flex items-center"> <i class="iconify block mr-1" data-icon="lucide:check"></i> <span class="font-sans text-sm">Panel de seguimiento</span> </li> <li class="flex items-center"> <i class="iconify block mr-1" data-icon="lucide:check"></i> <span class="font-sans text-sm">Citas</span> </li> <li class="flex items-center"> <i class="iconify block mr-1" data-icon="lucide:check"></i> <span class="font-sans text-sm">Videollamadas</span> </li> </ul> <a href="#" class="block w-full text-sm text-center font-sans my-2 py-4 font-medium text-primary-600 hover:text-muted-100 hover:bg-primary-500 hover:shadow-lg hover:shadow-primary-500/30 rounded-lg border border-primary-600/25 transition-all duration-300">
+Crear cuenta
+</a> <a href="#" class="block w-full text-sm text-center font-sans mb-2 py-4 font-medium text-muted-500 hover:text-muted-600 dark:text-muted-300 dark:hover:text-muted-100 rounded-lg border border-solid border-transparent hover:bg-muted-100 dark:hover:bg-muted-700 transition-colors duration-300">
+Más información
+</a> </div> </div> <!-- Pricing option --> <div> <div class="w-full rounded-xl px-6 md:px-8 pt-6 md:pt-8 pb-4 border border-muted-200 dark:border-muted-700 bg-white dark:bg-muted-800 transition-colors duration-300"> <div class="flex items-center -mt-2"> <div class="flex items-center justify-center h-12 w-12 border border-muted-200 dark:border-muted-700 rounded-full bg-white dark:bg-muted-800 mr-2"> <div class="flex items-center justify-center h-10 w-10 bg-primary-100 dark:bg-primary-100/10 rounded-full"> <i class="iconify w-5 h-5 text-primary-500" data-icon="ph:first-aid-kit-duotone"></i> </div> </div> <h3 class="font-heading text-2xl font-medium text-muted-800 dark:text-white">
+Empresa
+</h3> </div> <p class="font-sans text-sm py-2 mt-1 text-muted-500 dark:text-muted-400">
+Una membresía inicial para ayudarnos a crear más productos gratuitos.
+</p> <div class="flex items-center mt-2 mb-4"> <h4 class="font-heading text-4xl font-semibold text-muted-800 dark:text-white mr-4">
+$99
+</h4> <span class="font-sans text-xs text-muted-500 dark:text-muted-400"> <span>al mes</span> </span> </div> <ul class="pb-4 space-y-1 text-muted-400"> <li class="flex items-center"> <i class="iconify block mr-1" data-icon="lucide:check"></i> <span class="font-sans text-sm">
+Panel de control de la empresa</span> </li> <li class="flex items-center"> <i class="iconify block mr-1" data-icon="lucide:check"></i> <span class="font-sans text-sm">Citas</span> </li> <li class="flex items-center"> <i class="iconify block mr-1" data-icon="lucide:check"></i> <span class="font-sans text-sm">Videollamadas</span> </li> </ul> <a href="#" class="block w-full text-sm text-center font-sans my-2 py-4 font-medium text-primary-600 hover:text-muted-100 hover:bg-primary-500 hover:shadow-lg hover:shadow-primary-500/30 rounded-lg border border-primary-600/25 transition-all duration-300">
+Crear cuenta
+</a> <a href="#" class="block w-full text-sm text-center font-sans mb-2 py-4 font-medium text-muted-500 hover:text-muted-600 dark:text-muted-300 dark:hover:text-muted-100 rounded-lg border border-solid border-transparent hover:bg-muted-100 dark:hover:bg-muted-700 transition-colors duration-300">
+Más información
+</a> </div> </div> </div> </div> </div>  </div>  </section> <section class="w-full py-16 px-4 bg-muted-100 dark:bg-muted-1000">  </section>  <!-- Footer --> <footer class="font-sans bg-white dark:bg-muted-900"> <div class="w-full max-w-7xl mx-auto">  <div class="px-5 py-24 mx-auto"> <div class="flex flex-wrap md:text-left text-center -mb-10 -mx-4"> <div class="w-full mb-10 ltablet:mb-0 lg:mb-0 ltablet:w-2/6 lg:w-2/6 px-4"> <div class="max-w-[280px] mx-auto md:mx-0"> <a href="/" class="flex items-center justify-center md:justify-start gap-3 mb-4"> <span class="font-sans text-lg tracking-widest uppercase text-muted-800 dark:text-muted-100">AidFinder</span> </a> <p class="text-sm text-muted-500 dark:text-muted-400 mb-10 md:mb-0">
+Es una herramienta útil para aquellos que necesitan encontrar atención médica de forma rápida y sencilla en situaciones de emergencia.
+</p> </div> </div> <div class="lg:w-1/6 ltablet:w-1/6 md:w-1/2 w-full px-4"> <h2 class="font-medium tracking-widest text-sm mb-5 text-muted-800 dark:text-muted-100">
+RECURSOS
+</h2> <ul class="list-none space-y-3 mb-10"> <li> <a href="#" class="text-sm text-muted-500 dark:text-muted-400 hover:text-primary-500 dark:hover:text-primary-500 transition-colors duration-300">Covid-19</a> </li> <li> <a href="#" class="text-sm text-muted-500 dark:text-muted-400 hover:text-primary-500 dark:hover:text-primary-500 transition-colors duration-300">Acerca</a> </li> <li> <a href="#" class="text-sm text-muted-500 dark:text-muted-400 hover:text-primary-500 dark:hover:text-primary-500 transition-colors duration-300">Carreras</a> </li> <li> <a href="#" class="text-sm text-muted-500 dark:text-muted-400 hover:text-primary-500 dark:hover:text-primary-500 transition-colors duration-300">Prensa</a> </li> </ul> </div> <div class="lg:w-1/6 ltablet:w-1/6 md:w-1/2 w-full px-4"> <h2 class="font-medium tracking-widest text-sm mb-5 text-muted-800 dark:text-muted-100">
+DOCTORES
+</h2> <ul class="list-none space-y-3 mb-10"> <li> <a href="#" class="text-sm text-muted-500 dark:text-muted-400 hover:text-primary-500 dark:hover:text-primary-500 transition-colors duration-300">Todas las especialidades</a> </li> <li> <a href="#" class="text-sm text-muted-500 dark:text-muted-400 hover:text-primary-500 dark:hover:text-primary-500 transition-colors duration-300">Cardiología</a> </li> <li> <a href="#" class="text-sm text-muted-500 dark:text-muted-400 hover:text-primary-500 dark:hover:text-primary-500 transition-colors duration-300">Cirugía</a> </li> <li> <a href="#" class="text-sm text-muted-500 dark:text-muted-400 hover:text-primary-500 dark:hover:text-primary-500 transition-colors duration-300">Ginecología</a> </li> </ul> </div> <div class="lg:w-1/6 ltablet:w-1/6 md:w-1/2 w-full px-4"> <h2 class="font-medium tracking-widest text-sm mb-5 text-muted-800 dark:text-muted-100">
+ASISTENCIA
+</h2> <ul class="list-none space-y-3 mb-10"> <li> <a href="#" class="text-sm text-muted-500 dark:text-muted-400 hover:text-primary-500 dark:hover:text-primary-500 transition-colors duration-300">Línea directa</a> </li> <li> <a href="#" class="text-sm text-muted-500 dark:text-muted-400 hover:text-primary-500 dark:hover:text-primary-500 transition-colors duration-300">Centro de ayuda</a> </li> <li> <a href="#" class="text-sm text-muted-500 dark:text-muted-400 hover:text-primary-500 dark:hover:text-primary-500 transition-colors duration-300">Preguntas más frecuentes</a> </li> <li> <a href="#" class="text-sm text-muted-500 dark:text-muted-400 hover:text-primary-500 dark:hover:text-primary-500 transition-colors duration-300">Términos de servicio</a> </li> </ul> </div> </div> </div>  </div> <div class="border-t border-muted-200 dark:border-muted-800"> <div class="w-full max-w-7xl mx-auto">  <div class="px-5 py-8 flex flex-col md:flex-row mx-auto items-center"> <div class="w-full ltablet:w-auto lg:w-auto flex flex-col md:flex-row items-center justify-center md:justify-start gap-y-2"> <div class="relative w-full sm:w-64 md:w-40 sm:mr-4 mr-2"> <input type="text" class="w-full h-10 bg-muted-100 dark:bg-muted-700 bg-opacity-50 rounded-lg border border-muted-300 dark:border-muted-600 text-sm text-muted-700 py-1 px-3 leading-8 tw-accessibility transition-colors duration-300 ease-in-out" placeholder="Correo electrónico"> </div> <button class="w-full md:w-auto h-10 inline-flex items-center justify-center text-white bg-primary-600 border-0 py-2 px-6 focus:outline-none hover:bg-primary-700 rounded-lg">Suscribirse</button> </div> <span class="inline-flex ltablet:ml-auto lg:ml-auto md:mt-0 mt-6 w-full justify-center md:justify-start md:w-auto"> <a class="text-muted-500"> <i class="iconify w-5 h-5" data-icon="fa6-brands:facebook-f"></i> </a> <a class="ml-3 text-muted-500"> <i class="iconify w-5 h-5" data-icon="fa6-brands:twitter"></i> </a> <a class="ml-3 text-muted-500"> <i class="iconify w-5 h-5" data-icon="fa6-brands:instagram"></i> </a> <a class="ml-3 text-muted-500"> <i class="iconify w-5 h-5" data-icon="fa6-brands:linkedin-in"></i> </a> </span> </div>  </div> </div> </footer> <!-- Main script -->  </body> </html>
